@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent h1 {
+            text-align: center;
+        }
+
+        .colors {
+            display: flex;
+            list-style: none;
+            justify-content: space-around;
+        }
+
+        .colors li {
+            border: 1px solid black;
+            padding: 20px 30px;
+            cursor: pointer;
+            color: white
+        }
+
+        .child0 {
+            background-color: white;
+        }
+
+        .child1 {
+            background-color: black;
+        }
+
+        .child2 {
+            background-color: green;
+        }
+
+        .child3 {
+            background-color: yellow;
+            color: black;
+        }
+
+        .child4 {
+            background-color: blue;
+        }
+
+        .child5 {
+            background-color: cyan;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="parent">
+        <h1>Change the Background color</h1>
+        <ul id="colorsBox" class="colors">
+            <li id="White" class="child0" style="color: black;">White</li>
+            <li id="Black" class="child1">Black</li>
+            <li id="Green" class="child2">Green</li>
+            <li id="Yellow" class="child3">Yellow</li>
+            <li id="Blue" class="child4">Blue</li>
+            <li id="Cyan" class="child5">Cyan</li>
+        </ul>
+    </div>
+
+    <script>
+        // document.getElementById("White").onclick = () => alert("White")
+
+        // [c1] addEventListener
+
+        // document.getElementById("White").addEventListener("click", function () { alert("White") })
+
+        // The last argue (Event Propagation) in addEventListener is false by default
+        // Go and use these below exmpls and get the difference
+
+        document.getElementById("colorsBox").addEventListener("click", function () { console.log("Colors box") }, true)
+        // document.getElementById("colorsBox").addEventListener("click", function () { console.log("Colors box") }, false)
+        // document.getElementById("White").addEventListener("click", function () { console.log("White Color") }, false)
+        document.getElementById("White").addEventListener("click", function (e) {
+            e.preventDefault(); // For stop form or link submission
+            console.log("White Color")
+            e.stopPropagation()
+        }, true)
+
+
+
+
+        // document.body.addEventListener("keydown", (e) => console.log("DownKey - ", e))
+
+        // [c1] attachEvent()
+        // [c1] jQuery - on()
+
+
+
+
+    </script>
+
+</body>
+
+</html>

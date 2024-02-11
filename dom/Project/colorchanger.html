@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent h1 {
+            text-align: center;
+        }
+
+        .colors {
+            display: flex;
+            list-style: none;
+            justify-content: space-around;
+        }
+
+        .colors li {
+            border: 1px solid black;
+            padding: 20px 30px;
+            cursor: pointer;
+            color: white
+        }
+
+        .child0 {
+            background-color: white;
+        }
+
+        .child1 {
+            background-color: black;
+        }
+
+        .child2 {
+            background-color: green;
+        }
+
+        .child3 {
+            background-color: yellow;
+            color: black;
+        }
+
+        .child4 {
+            background-color: blue;
+        }
+
+        .child5 {
+            background-color: cyan;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <h1>Change the Background color</h1>
+        <ul class="colors">
+            <li class="child0" onclick="changeColor('white');" style="color: black;">White</li>
+            <li class="child1" onclick="changeColor('Black');">Black</li>
+            <li class="child2" onclick="changeColor('Green');">Green</li>
+            <li class="child3" onclick="changeColor('Yellow');">Yellow</li>
+            <li class="child4" onclick="changeColor('Blue');">Blue</li>
+            <li class="child5" onclick="changeColor('Cyan');">Cyan</li>
+        </ul>
+    </div>
+
+    <script>
+        function changeColor(color) {
+            const heading = document.getElementsByTagName("h1")
+            if (color === "white") {
+                heading[0].style.color = "black"
+                heading[0].style.transition = "ease 3s"
+            }
+            else {
+                heading[0].style.color = "white"
+                heading[0].style.transition = "ease 3s"
+            }
+            document.body.style.backgroundColor = color;
+        }
+    </script>
+</body>
+
+</html>

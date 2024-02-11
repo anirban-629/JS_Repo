@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="title" class="bg-black">
+        <!-- [c1] To understand diff between text content and innerHtml uncomment this line -->
+        <!-- <h1 id="h" class="heading">LEARN - DOM <b>(Document Object          Model)</b> </h1> -->
+        <h1 id="h" class="heading">LEARN - DOM <b>(Document Object Model)</b> </h1>
+        <h1 id="h1" class="heading1">LEARN - DOM <b>(Document Object Model)</b> </h1>
+        <h1 id="h2" class="heading2">LEARN - DOM <b>(Document Object Model)</b> </h1>
+        <h1 id="h3" class="heading3">LEARN - DOM <b>(Document Object Model)</b> </h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, sequi.</p>
+    </div>
+
+    <ul id="days">
+
+    </ul>
+
+
+
+    <script>
+        // console.log(10)
+        const titleElement = document.getElementById("title");
+        // console.log(titleElement.innerText)
+        // console.log(titleElement.innerHTML)
+        // console.log(document.querySelector("#h"))
+        // console.log(document.querySelector("h1"))
+        // console.log(document.querySelectorAll("h1"))
+
+        //     console.log(titleElement.children[0])
+        //     console.log(titleElement.children[0].childNodes)
+        //     console.log(titleElement.children[0].nextElementSibling)
+        //     console.log(titleElement.children[0].nextElementSibling.previousElementSibling)
+
+        // DIFFERENCES
+        const ele1 = document.querySelectorAll("#title h1")
+        console.log(ele1[0].innerHTML)
+        console.log(ele1[0].querySelector('b').innerText)
+        console.log(ele1[0].querySelector('b').textContent) // Returns full line with extra spaces
+
+        // ADDING CHILD ELEMENT
+        const newh1 = document.createElement("h1")
+        newh1.className = "heading4"
+        newh1.id = "h4"
+        newh1.setAttribute("test", "test-attr")
+        newh1.innerText = "Element Inserted by JS"
+        newh1.style.backgroundColor = "green"
+        // titleElement.appendChild(newh1)
+
+
+        const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday",]
+        const daysUl = document.getElementById("days")
+        days.forEach((day) => {
+            const li = document.createElement("li")
+            li.id = day
+            li.className = "day"
+            li.innerHTML = `<b>${day}</b>`
+            daysUl.appendChild(li)
+        })
+
+
+
+    </script>
+
+</body>
+
+</html>
