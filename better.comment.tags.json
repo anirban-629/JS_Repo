@@ -64,6 +64,15 @@
       "italic": true
     },
     {
+      "tag": "[c2]",
+      "color": "#E6A4B4",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": true
+    },
+    {
       "tag": "[ic1]",
       "color": "#FFFC9B",
       "strikethrough": false,
