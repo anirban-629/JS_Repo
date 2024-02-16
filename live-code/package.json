@@ -1,0 +1,19 @@
+{
+  "name": "code-in-live",
+  "version": "1.0.0",
+  "description": "Use to run live code using nodemon",
+  "main": "index.js",
+  "scripts": {
+    "dev":"nodemon index.js"
+  },
+  "keywords": [
+    "JavaScript",
+    "JavaScript",
+    "advanced"
+  ],
+  "author": "Anirban Mishra",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
