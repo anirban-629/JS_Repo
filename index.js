@@ -889,17 +889,49 @@ function adv05() {
 
   console.log(val4);
 }
-adv05();
+// adv05();
 
-// [c2] ***DOM*** function adv06() {} adv06();
+// [->] ***DOM*** - CHECK dom File function adv06() {} adv06();
 
-// [c2] function adv07() {} adv07();
+// [->] ASYNCHRONUS
+/**
+ *    * JAVASCRIPT - [Synchronous, Single threaded (works in single threaded - slow)]
+ *    * EXECUTION CONTEXT - [Executes one line of code at a time]
+ *    *                     [Each operation waits for the last one to be completed]
+ *
+ *    ? Blocking Code -
+ *           * Block the flow of python
+ *           * Read file sync
+ *
+ *    ? Non-Blocking Code
+ *           * Don't Block the flow of python
+ *           * Read file async
+ *
+ */
 
-// [c2] function adv08() {} adv08();
+// [c1]
+function adv07() {
+  const a = 10;
+  const b = 20;
 
-// [c2] function adv08() {} adv08();
+  // * non blocking
+  // setTimeout(() => {
+  //   console.log(a);
+  // }, 2000);
+  // console.log(b);
 
-// [c2] function adv10() {} adv10();
+  // * Call stack - ***
+  setTimeout(() => {
+    console.log(a);
+  }, 1);
+  console.log(b);
+}
+// adv07();
+
+// [c1] check async project folder function adv08() {} adv08();
+
+// [c1] function adv08() {} adv08();
+// [c1] function adv10() {} adv10();
 
 // ? INTERVIEW ASKED QUESTIONS
 
@@ -917,4 +949,4 @@ function error() {
 }
 
 // ! Name of the global object in browser
-// * WINDOWs
+// * WINDOW
