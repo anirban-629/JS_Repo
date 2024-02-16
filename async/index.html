@@ -7,15 +7,51 @@
   </head>
   <body>
     <h1>Learning asynchronus</h1>
-    <button id="id">stop</button>
-
+    <button id="stopHiding">stop</button>
+    <br />
+    <button id="startDateShow">Start date showing</button>
+    <button id="stopDateShow">Stop date showing</button>
+    <ul id="dateshow"></ul>
     <script>
-      setTimeout(() => {
-        console.log("ANIRBAN");
+      const heading = document.getElementsByTagName("h1")[0];
+      const stopBtn = document.getElementById("stopHiding");
+
+      // const sayHello = () => console.log("Hey! Hello");
+      // setTimeout(sayHello, 2000);
+
+      const hidingContent = setTimeout(() => {
+        heading.innerHTML = "Hidden Content";
       }, 2000);
 
-      const sayHello = () => console.log("Hey! Hello");
-      setTimeout(sayHello, 2000);
+      stopBtn.addEventListener("click", () => {
+        clearTimeout(hidingContent);
+        console.log("STOPPED");
+      });
+      //  --------------------------------
+      const startDateBtn = document.getElementById("startDateShow");
+      const stopDateBtn = document.getElementById("stopDateShow");
+      const dateShowList = document.getElementById("dateshow");
+
+      const getDate = () => {
+        return new Date();
+      };
+
+      const addListElementInDateShow = () => {
+        setInterval(() => {
+          const li = document.createElement("li");
+          li.innerText = getDate();
+          dateShowList.appendChild(li);
+        }, 1000);
+      };
+
+      startDateBtn.addEventListener("click", () => {
+        addListElementInDateShow();
+      });
+
+      stopDateBtn.addEventListener("click", () => {
+        clearInterval(addListElementInDateShow());
+        console.log("stopped");
+      });
     </script>
   </body>
 </html>

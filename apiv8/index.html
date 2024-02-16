@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="mainForm">
+      <label>Enter github Repo</label>
+      <input type="text" placeholder="Github Repo Name" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+      const mainForm = document.getElementById("mainForm");
+      const resultDiv = document.getElementById("result");
+
+      mainForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const repoName = mainForm.querySelector("input").value;
+        const requestUrl = `https://api.github.com/users/${repoName}`;
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", requestUrl);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            const data = JSON.parse(this.responseText);
+            if (data.message === "Not Found") {
+              const ele = document.createElement("h1");
+              ele.innerText = `Repo ${data.message}`;
+              resultDiv.append(ele);
+            } else {
+              const h1 = document.createElement("h1");
+              h1.innerText = `Repo details: ${repoName}`;
+              resultDiv.append(h1);
+              const ol = document.createElement("ol");
+              const transformedData = Object.entries(data).map(
+                ([key, value]) => [key, value]
+              );
+              transformedData.map((e) => {
+                if (e[0].endsWith("_url")) {
+                  const a = document.createElement("a");
+                  a.innerText = `${e[0]} - ${e[1]}`;
+                  a.href = e[1];
+                  ol.appendChild(a);
+                } else {
+                  const li = document.createElement("li");
+                  li.innerText = `${e[0]} - ${e[1]}`;
+                  ol.appendChild(li);
+                }
+              });
+              resultDiv.appendChild(ol);
+            }
+          }
+        };
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>

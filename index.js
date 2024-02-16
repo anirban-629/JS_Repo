@@ -930,8 +930,187 @@ function adv07() {
 
 // [c1] check async project folder function adv08() {} adv08();
 
-// [c1] function adv08() {} adv08();
-// [c1] function adv10() {} adv10();
+// [c1] API Request and V8 Engine
+/**
+ * * SOME FUNCTIONs are not in core js like document etc. it's browser functionality
+ * * v8 engine is one of the engine which runs javascript (many engines are there)
+ * * v8 engine is written in c++ even javascript is also actually runs by cpp
+ * * console.log is also given by these engines it's not a feature of core js it's kind of debugging tool
+ * * Check v8 engine github
+ */
+
+function adv09() {
+  // * AJAX Request
+  const requestUrl = "https://api.github.com/users/anirban629Weavers";
+  const xhr = new XMLHttpRequest();
+
+  xhr.open("GET", requestUrl);
+  xhr.onreadystatechange = function () {
+    console.log(xhr.readyState);
+    if (xhr.readyState === 4) {
+      const data = this.responseText;
+      console.log(typeof data);
+      const structuredData = JSON.parse(data);
+      console.log(typeof structuredData);
+    }
+  };
+  xhr.send();
+}
+// adv09(); // ! This function will not run here go and check apiv8 folder
+
+// [c1] PROMISES
+/**
+ * ? Promise part 1
+ * ? promise1.then() -> direct connection with resolve
+ */
+function adv08() {
+  // [c2] CREATING PROMISE
+  const promise1 = new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      console.log("Async Task 1 is completed");
+      resolve(); // * connects .then()
+    }, 1000);
+  });
+
+  // promise1.then(function () {
+  //   console.log("Promise 1 Resolved");
+  // });
+
+  const promise2 = () => {
+    new Promise(function (resolve, reject) {
+      setTimeout(() => {
+        console.log("Async Task 2 is completed");
+        resolve();
+      }, 1000);
+    }).then(function () {
+      console.log("Promise 2 Resolved");
+    });
+  };
+  // promise2(); // [c2] Open Promise
+
+  // ? SENDING DATA FROM RESOLVE
+  const promise3 = new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      console.log("Async Task 3 is completed");
+      resolve({ username: "Anirban Mishra", email: "abc@xyz.com" });
+    }, 1000);
+  });
+
+  // promise3.then(function (data) {
+  //   console.log("Promise 3 Resolved data recieved - ", data);
+  // });
+}
+// adv08();
+// [c1]
+/**
+ * ? Promise part 2
+ * ? Chainging
+ */
+function adv10() {
+  const promise4 = new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      // let error = true;
+      let error = false;
+      if (!error) {
+        console.log("Async Task 4 is completed without any error");
+        resolve({ username: "Anirban Mishra", email: "abc@xyz.com" });
+      } else {
+        reject({ error: "Async Task 4 is completed with any error" });
+      }
+    }, 1000);
+  });
+
+  promise4
+    .then((user) => {
+      console.log("Sending username");
+      return user.username;
+    })
+    .then((username) => {
+      // ! Chaining
+      console.log(username);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      console.log("Finally The promise is either resolved or rejected");
+    });
+}
+// adv10();
+
+// [c1]
+/**
+ * ? Promise part 3
+ * ? async-await syntax
+ * ? Similar like then-catch
+ * ? try-catch
+ */
+function adv11() {
+  const promise5 = new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      let error = true;
+      // let error = false;
+      if (!error) {
+        console.log("Async Task 4 is completed without any error");
+        resolve({ username: "Anirban Mishra", pass: "password" });
+      } else {
+        reject({ error: "Async Task 4 is completed with any error" });
+      }
+    }, 1000);
+  });
+
+  async function consumePromise5() {
+    try {
+      const response = await promise5;
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      console.log(error.error);
+    }
+  }
+  consumePromise5();
+}
+// adv11();
+
+// [c1]
+/**
+ * ? Fetching data from API
+ */
+async function adv12() {
+  try {
+    const response = await fetch("https://api.github.com/users/anirban-629");
+    const data = await response.json(); // Takes time to convert in json
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+// adv12();
+
+// [c1]
+async function adv13() {
+  await fetch("https://api.github.com/users/anirban-629") // * Success
+    // await fetch("https://api.github.com/users/anirban-629a") // * Success but not found
+    // await fetch("https/://api.github.com/users/anirban-629a") // * Error
+    .then((data) => data.json())
+    .then((data) => console.log("Success - ", data))
+    .catch((err) => console.log("Error - ", err))
+    .finally(() => console.log("Finally promise is Resolved"));
+}
+adv13();
+
+// [c1]
+/**
+ *  Execution queue
+ */
+function adv14() {}
+adv14();
+// [c1] function adv15() {} adv15();
+// [c1] function adv16() {} adv16();
+// [c1] function adv17() {} adv17();
+// [c1] function adv18() {} adv18();
+// [c1] function adv19() {} adv19();
+// [c1] function adv20() {} adv20();
 
 // ? INTERVIEW ASKED QUESTIONS
 
