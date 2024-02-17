@@ -890,8 +890,11 @@ function adv05() {
   console.log(val4);
 }
 // adv05();
-
-// [->] ***DOM*** - CHECK dom File function adv06() {} adv06();
+/**
+ * [c1]------------------------------------------------------------
+ * [->] ***DOM*** - CHECK ./dom File function adv06() {} adv06();
+ * [c1]------------------------------------------------------------
+ */
 
 // [->] ASYNCHRONUS
 /**
@@ -928,10 +931,12 @@ function adv07() {
 }
 // adv07();
 
-// [c1] check async project folder function adv08() {} adv08();
-
-// [c1] API Request and V8 Engine
 /**
+ * [c1]------------------------------------------------------------
+ * [->] check ./async project folder function adv08() {} adv08();
+ * [c1]------------------------------------------------------------
+ *
+ * [c1] API Request and V8 Engine
  * * SOME FUNCTIONs are not in core js like document etc. it's browser functionality
  * * v8 engine is one of the engine which runs javascript (many engines are there)
  * * v8 engine is written in c++ even javascript is also actually runs by cpp
@@ -956,7 +961,7 @@ function adv09() {
   };
   xhr.send();
 }
-// adv09(); // ! This function will not run here go and check apiv8 folder
+// adv09(); // [->] This function will not run here go and check apiv8 folder
 
 // [c1] PROMISES
 /**
@@ -1097,20 +1102,248 @@ async function adv13() {
     .catch((err) => console.log("Error - ", err))
     .finally(() => console.log("Finally promise is Resolved"));
 }
-adv13();
+
+// adv13();
 
 // [c1]
 /**
  *  Execution queue
  */
-function adv14() {}
-adv14();
+async function adv14() {
+  await fetch("https://api.github.com/users/anirban-629")
+    .then((data) => data.json())
+    .then((data) => console.log("Success - ", data))
+    .catch((err) => console.log("Error - ", err))
+    .finally(() => console.log("Finally promise is Resolved"));
+}
+// adv14();
+
+/**
+ * [c1]------------------------------------------------------------
+ * [->] Object Oriented Programming -> function oop01() to oop02()
+ * [c1]------------------------------------------------------------
+ *
+ * ! OBJECT ORIENTED PROGRAMMING
+ * * *** JS has classes, this was introduced in ECMAScript 2015 or often refferred as ES6. JavaScript is primarily prototype-based language and classess are  primarily syntactice sugar over existing prototype-based inheritance mechanisms ***
+ *
+ * * OOP -
+ * [c2]   - Collection of properties and methods
+ *
+ * * Parts of OOP -
+ * [c2]   - Object Literal
+ *
+ * * Keywords -
+ * [c2]   - Constructor function
+ * [c2]   - Prototypes
+ * [c2]   - Classes
+ * [c2]   - Instances (new, this)
+ * [c1]   - 4 Pillars (Abstraction, Encapsulation, inheritance, polymorphism)
+ */
+
+// [c1]
+/**
+ * ? This keyword provides reference to the current context or like current object
+ * ? Object Literal
+ */
+function oop01() {
+  const user = {
+    username: "ANIRBAN",
+    loginCount: 8,
+    signedIn: true,
+    getUserDetails: function () {
+      console.log(
+        `${this.username} - login count: ${this.loginCount} - login status: ${this.signedIn}`
+      );
+      // ? *this* says that it needs the current object
+      console.log(this); // ? current context (object)
+    },
+  };
+  //   user.getUserDetails();
+  //   console.log("Global context - ", this); // ? Check in browser console
+}
+// oop01();
+
+// [c1]
+/**
+ * ? Constructor function
+ * * Make multiple context using same object literal
+ */
+function oop02() {
+  //   const promise1 = new Promise(); // ? new -> constructor function
+  function User(username, loginCount, signedIn) {
+    this.username = username;
+    this.loginCount = loginCount;
+    this.signedIn = signedIn;
+
+    // return this; // * Implicitly return is given
+    return this; // * write it for good practice
+  }
+
+  const user1 = User("ANIRBAN", 1, true);
+  //   console.log(user1); // * Check the values provided at the end
+  const user2 = User("Mishra", 2, false);
+  //   console.log(user1); // * Overwritten by user2
+
+  const user3 = new User("A1", 30, false);
+  const user4 = new User("A2", 40, true);
+
+  //   console.log(user3);
+  //   console.log(user4);
+
+  console.log(user1.constructor);
+}
+// oop02();
+
+/**
+ * [c1]------------------------------------------------------------
+ * [->] ProtoType -> function proto01() to proto05()
+ * [c1]------------------------------------------------------------
+ *
+ * [c1] Key Points
+ *      * JavaScript's default behavior is prototypal behavior
+ *      * Protoypal inheritance
+ *
+ *      * In js everything is object
+ *      * Array ------> Object ------> null
+ *      * String ------> Object ------> null
+ */
+
+// [c1]
+function proto01() {
+  const arr1 = ["a", "b", "c", "d", "e"];
+  //   console.log(arr1.__proto__);
+
+  // [c2] Function is a typeof function also a object
+  function multipyBy5(num) {
+    return num * 5;
+  }
+
+  // * is function a object ? (Technically yes)
+  multipyBy5.power = 2;
+
+  //   console.log(typeof multipyBy5);
+  //   console.log(typeof multipyBy5 === "object");
+  //   console.log(typeof multipyBy5 === "function");
+
+  console.log(multipyBy5.power);
+  console.log(multipyBy5(5));
+  console.log(multipyBy5.prototype);
+}
+// proto01();
+
+// [c1]
+/**
+ * [->] KEY TOPICS OF ***( new )*** KEYWORD
+ * * Here's what happens behind the scenes when the new keyword is used:
+
+ * [c2]  A new object is created: The new keyword initiates the creation of a new JavaScript object.
+
+ * [c2]  A prototype is linked: The newly created object gets linked to the prototype property of the constructor function. This means that it has access to properties and methods defined on the constructor's prototype.
+
+ * [c2]  The constructor is called: The constructor function is called with the specified arguments and this is bound to the newly created object. If no explicit return value is specified from the constructor, JavaScript assumes this, the newly created object, to be the intended return value.
+
+ * [c2] The new object is returned: After the constructor function has been called, if it doesn't return a non-primitive value (object, array, function, etc.), the newly created object is returned.
+ */
+function proto02() {
+  function createUser(username, score) {
+    this.username = username;
+    this.score = score;
+  }
+
+  // * Creating custom function inside prototype
+  createUser.prototype.incrementScore = function () {
+    this.score++;
+  };
+
+  createUser.prototype.printMe = function () {
+    console.log(`Username: ${this.username} - Score: ${this.score}`);
+  };
+
+  // * Manipulating same object
+  //   const a = createUser("A", 10);
+  //   const b = createUser("B", 20);
+
+  // * Creates new context every time
+  const a = new createUser("A", 10);
+  const b = new createUser("B", 20);
+
+  a.incrementScore();
+  b.incrementScore();
+
+  a.printMe();
+  b.printMe();
+}
+// proto02();
+
+// [c1]
+function proto03() {
+  let name1 = "Anirban    ";
+  let name2 = "         Rahul    ";
+  // console.log(myName.length);
+
+  // * Our object is to make a method trueLength (same as trim()) for all strings
+
+  // * Accessing the top level hierarchy
+  // [c1] Check topLvlProtoInsert()
+  String.prototype.customCLG = function () {
+    // console.log(typeof this)
+    // console.log(this) // * (this) gives the access of the value here
+    // console.log("customCLG is inserted in all String");
+  };
+
+  // name1.customCLG();
+  // name2.customCLG();
+
+  String.prototype.trueLength = function () {
+    return this.trim().length;
+  };
+  console.log(name1.trueLength());
+  console.log(name2.trueLength());
+}
+// proto03();
+
+// [c1]  More on Prototype
+function proto04() {
+  const obj1 = { a: 1, b: 2 };
+  const obj2 = { c: 3, d: 4 };
+  const obj3 = {
+    e: 5,
+    f: 6,
+    __proto__: obj1,
+  };
+  const obj4 = {
+    g: 7,
+    h: 8,
+    __proto__: obj2,
+  };
+  // console.log(obj1);
+  // console.log(obj2);
+
+  // console.log(obj1.a); // * Has access
+  // console.log(obj2.d); // * Has access
+
+  const obj5 = {};
+  obj5.__proto__ = obj4;
+  // console.log(obj5);
+  console.log(obj5.a); // * Undefined as obj4 has proto of obj2
+  console.log(obj5.d);
+}
+// proto04();
+
+// [c1] Modern syntax for set __proto__
+function proto05() {
+  const obj1 = { a: 1, b: 2, c: 3, d: 4 };
+  const obj2 = {};
+
+  // * Basically set __proto__ of obj2
+  // * Behind the scenes in classess also this mechanism is working
+  Object.setPrototypeOf(obj2, obj1);
+  console.log(obj2.a);
+  console.log(obj2.b);
+}
+// proto05();
+
 // [c1] function adv15() {} adv15();
-// [c1] function adv16() {} adv16();
-// [c1] function adv17() {} adv17();
-// [c1] function adv18() {} adv18();
-// [c1] function adv19() {} adv19();
-// [c1] function adv20() {} adv20();
 
 // ? INTERVIEW ASKED QUESTIONS
 
@@ -1129,3 +1362,54 @@ function error() {
 
 // ! Name of the global object in browser
 // * WINDOW
+
+// ! In case of fetch request you get an 404 error from where resolve or reject?
+
+/**
+ * *404 also comes from resolve. reject means that the request is not performed so it's sending error
+ *  */
+
+// ! FETCH - TOPICS
+/**
+ * [c1] For fetch ther's an external priortiy or microtask queue is there to execute all the fetch requests tasks in the execution cycle - High Priority
+ * [c2] request1 = fetch("...")
+ * [c2] data :   //* Not Directly accessable
+ * [c2]       - onFullfilled []
+ *                   * Not Directly accessable
+ *                   * Resolve - response
+ * [c2]       - onRejection  []  // * Not Directly accessable
+ *                   * Not Directly accessable
+ *                   * Reject - response
+ *
+ * [c1] *** Once the request is resolved or rejected the values are stored corresponding store [onFullfilled || onRejection] and makes the empty *data* fullfilled and now it's responsibility of data to send the response to the globally available *request1* (line - 1149 )
+ *
+ */
+
+// ! Top level prototype insertion
+const topLvlProtoInsert = () => {
+  const arr = [1, 2, 3, 4, 5, 6];
+  const obj = { a: 1, b: 2, c: 3, d: 4, e: 5 };
+
+  Object.prototype.customObj1 = function () {
+    console.log("Inserted at *Object*");
+  };
+
+  Array.prototype.customArr1 = function () {
+    console.log("Inserted at *Array*");
+  };
+
+  obj.customObj1();
+  arr.customObj1();
+  arr.customArr1();
+  // obj.customArr1(); // ! Throws error as array is obj but obj is not array
+};
+// topLvlProtoInsert();
+
+const test1 = () => {
+  console.log(1);
+  setTimeout(() => {
+    console.log(2);
+  }, 1000);
+  console.log(3);
+};
+// test1();
