@@ -1343,9 +1343,363 @@ function proto05() {
 }
 // proto05();
 
-// [c1] function adv15() {} adv15();
+// [c1] call and this
+/**
+ * [c1] this -> current context
+ * [c1] console.log(this) ->
+ *                   In browser this refers to Window object
+ *                   In node environment this refers to {} (blank Obj)
+ */
+function adv15() {
+  function setUsername(username) {
+    console.log("Function called data - ", username);
+    this.username = username;
+  }
 
-// ? INTERVIEW ASKED QUESTIONS
+  function createUser(username, name, password) {
+    // setUsername(username); // ! throws error username will not be defined
+
+    // * Sending this arguement for the current context (createUser)
+    // * in setUsername *this.username* here *this* is createUser's context
+    setUsername.call(this, username);
+
+    this.name = name;
+    this.password = password;
+  }
+
+  const obj1 = new createUser("anirban123", "Xyz", "123adsd@e@D");
+  console.log(obj1);
+}
+// adv15();
+
+/**
+ * [c1]------------------------------------------------------------
+ * [->] Classes & Objects -> function clsobj01() to clsobj04()
+ * [c1]------------------------------------------------------------
+ *
+ */
+
+// [c1]
+function clsobj01() {
+  class User {
+    constructor(username, email, password) {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+    }
+    // ? Methods
+    encryptPassword() {
+      this.password = this.password + "-abc";
+      // return `${this.password}-abc`;
+    }
+    changeUserName(username) {
+      this.username = username;
+    }
+  }
+
+  const user1 = new User("anirban629", "anirban@gmail.com", "anirban");
+  // console.log(user1.encryptPassword());
+  console.log(user1);
+  user1.encryptPassword();
+  console.log(user1);
+  user1.changeUserName("NewUsername");
+  console.log(user1);
+}
+// clsobj01();
+
+// [c1]
+/**
+ * [c2] Behind the scenes what's happening of function -> clsobj01
+ * [c2] Compare the output of clsboj01 & clsboj02
+ * [c2] That's why js is prototype based that's how it work behind the scenes
+ */
+function clsobj02() {
+  function User(username, email, password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+  }
+
+  User.prototype.encryptPassword = function () {
+    this.password = this.password + "-abc";
+  };
+
+  User.prototype.changeUserName = function (username) {
+    this.username = username;
+  };
+
+  const user1 = new User("anirban629", "anirban@gmail.com", "anirban");
+  console.log(user1);
+  user1.encryptPassword();
+  console.log(user1);
+  user1.changeUserName("NewUsername");
+  console.log(user1);
+}
+// clsobj02();
+
+// [c1] Inheritance
+function clsobj03() {
+  class User {
+    constructor(username, email, password) {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+    }
+    logUser() {
+      console.log(`Username - ${this.username}`);
+      console.log(`Email - ${this.email}`);
+    }
+  }
+
+  class Teacher extends User {
+    constructor(username, email, password) {
+      super(username);
+      this.email = email;
+      this.password = password;
+
+      // super(username,email,password);
+    }
+
+    logTeacher() {
+      console.log(`Username - ${this.username}`);
+      console.log(`Email - ${this.email}`);
+    }
+  }
+
+  const teacher1 = new Teacher("ABC", "xyz@example.com", "password1234");
+  const teacher2 = new Teacher("ABsadC", "xyzasd@example.com", "aswo1234");
+  // teacher1.logTeacher();
+  // teacher1.logUser();
+
+  const user1 = new User("fgh");
+  // user1.logUser();
+
+  // * false - Never same as new instance
+  // console.log(teacher1 === user1);
+  // console.log(teacher1 === teacher2);
+
+  // * Check if instanceof a class or not
+  console.log(user1 instanceof Teacher);
+  console.log(teacher1 instanceof User);
+  console.log(teacher1 instanceof Teacher);
+}
+// clsobj03();
+
+// [c1] static props
+function clsobj04() {
+  class User {
+    constructor(username) {
+      this.username = username;
+    }
+    logUser() {
+      console.log(`Username - ${this.username}`);
+    }
+    createId() {
+      return `${Math.random() * 100}`;
+    }
+
+    // * Prevent it accessing to every object
+    static createPrivateId() {
+      return `${Math.random() * 100}`;
+    }
+  }
+  const user1 = new User();
+  // console.log(user1.createId());
+  class Teacher extends User {
+    constructor(username, email) {
+      super(username);
+      this.email = email;
+    }
+    logTeacher() {
+      // console.log("_id : ", this.createPrivateId());
+      console.log("Username : ", this.username);
+      console.log("Email : ", this.email);
+    }
+  }
+
+  const teacher1 = new Teacher("t1123csa", "i@phone.com");
+  // console.log(teacher1);
+  teacher1.logTeacher();
+}
+// clsobj04();
+
+/**
+ * [c1]------------------------------------------------------------
+ * [->] Check bind at ./bind/index.html
+ * [c1]------------------------------------------------------------
+ * */
+
+/**
+ * [c1] Getters, Setters, Stack Overflow
+ */
+function adv16() {
+  class User {
+    constructor(email, password) {
+      this.email = email;
+      this.password = password;
+    }
+
+    // ! Stack Overflow error -> RangeError: Maximum call stack size exceeded
+    // ? class is confused who is trying to set the value of password
+    set password(pass) {
+      this.password = pass;
+    }
+    get password() {
+      return this.password.toUpperCase();
+    }
+  }
+
+  // const user1 = new User("abc@xyz.com", "pass123"); // * RangeError
+  // console.log(user1.password);
+
+  class User2 {
+    constructor(email, password) {
+      this.email = email;
+      this.password = password;
+    }
+
+    set email(emailData) {
+      this._email = emailData;
+    }
+
+    get email() {
+      return this._email.toUpperCase();
+    }
+
+    // * Create a new property _password
+    set password(pass) {
+      console.log(
+        "pass inside set password is coming from constructor - " + pass
+      );
+      this._password = pass;
+    }
+
+    get password() {
+      return this._password.toUpperCase();
+    }
+  }
+
+  const user1 = new User2("abc@xyz.com", "pass123"); // * RangeError
+  // console.log(user1);
+  console.log("email - ", user1.email);
+  console.log("password - ", user1.password);
+
+  console.log("_email - ", user1._email);
+  console.log("_password - ", user1._password);
+}
+// adv16();
+
+// [c2] Function based getter setter old syntax
+function adv17() {
+  function User(email, password) {
+    this._email = email;
+    this._password = password;
+
+    Object.defineProperty(this, "email", {
+      get: function () {
+        return this._email.toUpperCase();
+      },
+      set: function (value) {
+        this._email = value;
+      },
+    });
+
+    Object.defineProperty(this, "password", {
+      get: function () {
+        return this._password.toUpperCase();
+      },
+      set: function (value) {
+        this._password = value;
+      },
+    });
+  }
+  const user = new User("abc@xyz.com", "pass123");
+  console.log(user.email);
+  console.log(user.password);
+}
+// adv17();
+
+// [c2] Object based getter setter
+function adv18() {
+  const user = {
+    // * Private Properties convention but it's accessible
+    // ? ES2022 new proposal is use # to property to make it properly private
+
+    _email: "cQ@D@aasd1.com",
+
+    /**
+     * @param {string} value
+     */
+    set email(value) {
+      this._email = value;
+    },
+
+    get email() {
+      return this._email.toUpperCase();
+    },
+  };
+
+  // console.log(user);
+  // user.email = "abc@xyz.com";
+  // console.log(user.email);
+
+  const obj1 = Object.create(user);
+  console.log(obj1.email);
+}
+
+// adv18();
+
+/**
+ * [c1]------------------------------------------------------------
+ * [->] Lexical Scope and Closure - lexClos01()-lexClos02()
+ * [c1]------------------------------------------------------------
+ *
+ * * Lexical Scoping
+ * ? Every inner function has the access of properties of it's outer functions
+ **/
+
+function lexClos01() {
+  function outerFunction() {
+    const var1 = 100;
+    console.log("VAR2", var2);
+    function innerFunction() {
+      let var2 = 200;
+      console.log("VAR1", var1);
+      console.log("VAR2", var2);
+    }
+    innerFunction();
+  }
+  const var1InOuterFunction = outerFunction();
+  // console.log("VAR1", var1); // ! No access Reference error
+  // console.log("VAR2", var2); // ! No access Reference error
+}
+// lexClos01();
+
+function lexClos02() {
+  function outerFunction() {
+    const var1 = 100;
+    function innerFunction() {
+      let var1 = 100;
+      let var2 = 200;
+      console.log(var1, var2);
+      return { var1, var2 };
+    }
+    return innerFunction;
+  }
+
+  const func1 = outerFunction();
+  const scopeWithData = func1();
+
+  console.log(scopeWithData.var1);
+  console.log(scopeWithData.var2);
+}
+// lexClos02();
+
+/**
+ * [c1]------------------------------------------------------------
+ * [->] INTERVIEW ASKED QUESTIONS
+ * [c1]------------------------------------------------------------
+ **/
 
 // ! Create function with required params
 function error() {
@@ -1359,6 +1713,7 @@ function error() {
   one(10);
   one();
 }
+// error();
 
 // ! Name of the global object in browser
 // * WINDOW
@@ -1367,7 +1722,7 @@ function error() {
 
 /**
  * *404 also comes from resolve. reject means that the request is not performed so it's sending error
- *  */
+ */
 
 // ! FETCH - TOPICS
 /**
@@ -1405,6 +1760,110 @@ const topLvlProtoInsert = () => {
 };
 // topLvlProtoInsert();
 
+// ! Change the value of PI question -> Not Possible
+function changePi() {
+  // console.log(Math);
+
+  console.log("Before change - Math.PI ->", Math.PI);
+  const descriptor = Object.getOwnPropertyDescriptor(Math, "PI");
+  // console.log(descriptor);
+  // descriptor.set = 400;
+  // descriptor.set = 500;
+  console.log(descriptor);
+  console.log("After change - Math.PI ->", Math.PI);
+}
+// changePi();
+
+function customObjProperty() {
+  const me = {
+    name: "Anirban",
+    role: "Software Developer",
+  };
+  // We can change the properties
+  console.log(Object.getOwnPropertyDescriptor(me, "name"));
+
+  // Taking the properties control
+  Object.defineProperty(me, "name", {
+    configurable: false,
+    writable: false,
+    enumerable: false,
+  });
+
+  console.log(Object.getOwnPropertyDescriptor(me, "name"));
+
+  // * throws error ->
+  // ! Cannot redefine property 'name' once defined
+  // Object.defineProperty(me, "name", {
+  //   configurable: true,
+  //   writable: false,
+  //   enumerable: false,
+  // });
+}
+// customObjProperty();
+
+function customPI() {
+  const piDescriptor = Object.getOwnPropertyDescriptor(Math, "PI");
+
+  // * throws error ->
+  // ! Cannot redefine property 'name' once defined
+  Object.defineProperty(Math, "PI", {
+    value: 3.14,
+    writable: true,
+    enumerable: piDescriptor.enumerable,
+    configurable: piDescriptor.configurable,
+  });
+
+  console.log(Math.PI);
+}
+// customPI();
+
+// ! Iterate Objects
+function iterObj() {
+  const obj1 = {
+    name: "Anirban",
+    role: "Software Developer",
+    country: "India",
+    defineMe: function () {
+      console.log(`${this.name}-${this.role}-${this.country}`);
+    },
+  };
+  // console.log(Object.entries(obj1));
+
+  // * Skip iterating a single property of an object
+  // ? this will skip the iteration of 'name'
+  Object.defineProperty(obj1, "name", {
+    enumerable: false,
+  });
+
+  for (const [key, value] of Object.entries(obj1)) {
+    if (typeof value !== "function") {
+      console.log(key + " : " + value);
+    }
+  }
+}
+// iterObj();
+
+// ! Higher Order Functions
+/**
+ * ? A higher order function is a function that takes one or more functions as arguments, or returns a function as its result.
+ * * There are several different types of higher order functions like map and reduce. We will discuss these later in this tutorial. But before that let's first dive deep into what higher order functions are.
+ */
+const higherOrderFunction = () => {
+  function callbackFunction() {
+    console.log("I am  a callback function");
+  }
+
+  // higher order function
+  function higherOrderFunction(func) {
+    console.log("I am higher order function");
+    func();
+  }
+
+  higherOrderFunction(callbackFunction);
+};
+// higherOrderFunction();
+
+// ! TEST
 const test1 = () => {
   console.log(1);
   setTimeout(() => {
