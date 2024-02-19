@@ -26,6 +26,9 @@ function q2() {
 // q2();
 
 // ! what is "use strict"?
+// ? The "use strict" directive enables JavaScript's strict mode. JavaScript's strict mode was introduced in ECMAScript 5. It enforces stricter parsing and error handling on the code at runtime. It also helps you write cleaner code and catch errors and bugs that might otherwise go unnoticed.
+
+// ! What is ECMAScript
 // ? ECMAScript is a standard for scripting languages, including JavaScript, JScript, and ActionScript. It is best known as a JavaScript standard intended to ensure the interoperability of web pages across different web browsers. LINK - https://tc39.es/
 
 // ! Basic Questions
