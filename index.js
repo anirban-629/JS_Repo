@@ -31,6 +31,7 @@ function q2() {
 // ! What is ECMAScript
 // ? ECMAScript is a standard for scripting languages, including JavaScript, JScript, and ActionScript. It is best known as a JavaScript standard intended to ensure the interoperability of web pages across different web browsers. LINK - https://tc39.es/
 
+// [page content]
 // ! Basic Questions
 function q3() {
   // console.log("1 + 1   - ", 1 + 1);
@@ -1215,6 +1216,7 @@ function oop02() {
 function proto01() {
   const arr1 = ["a", "b", "c", "d", "e"];
   //   console.log(arr1.__proto__);
+  //   console.log(arr1.prototype); // [c1] Browser Acceptable
 
   // [c2] Function is a typeof function also a object
   function multipyBy5(num) {
