@@ -1700,6 +1700,17 @@ function lexClos02() {
 }
 // lexClos02();
 
+// [c1] Array some function
+function adv19() {
+  const arr1 = ["a", "a", "b", "c", "d", "a"];
+  const arr2 = ["a", "", "b", "c", "d", ""];
+
+  // Returns boolean based on whole array and the condition given
+  const ifEmptyField = arr2.some((ele) => ele == "");
+  console.log(ifEmptyField);
+}
+adv19();
+
 /**
  * [c1]------------------------------------------------------------
  * [->] INTERVIEW ASKED QUESTIONS
