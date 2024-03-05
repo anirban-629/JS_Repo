@@ -118,16 +118,10 @@ function q5() {
 /*  Premitive Datatype (Call by Value (copy of val) - 7 types)
        String, Number, Boolean, null (empty), undefined, Symbol, BigInt
 
-
-
-
    Non-Premitive/Reference Datatype(Call by ref)
        Arrays, Objects, Functions
  
    => JavaScript is a dynamically typed language, which means that data types of variables are determined by the value they hold at runtime and can change throughout the program as we assign different values to them.
-
-
-
 
    => TypeScript is primarily a statically typed language, not a dynamically typed one
 */
@@ -290,7 +284,7 @@ function q12() {
 
   const arr3 = new Array(1, 2, 3, 4, 5, 6);
   //   arr3.unshift(10); // * Insertion at start
-  console.log(arr3);
+  // console.log(arr3);
   arr3.shift();
   //   console.log(arr3); // * Deletion of first element
 
@@ -302,11 +296,17 @@ function q12() {
 
   // ? Slice & Splice
   const arr5 = [0, 1, 2, 3, 4, 5, 6, 7];
-  console.log("Slice - ", arr5.slice(0, 5));
-  console.log("arr5 - ", arr5);
-  console.log("Splice - ", arr5.splice(0, 5));
-  console.log("arr5 - ", arr5); // *** Changes the array
+  // console.log("Slice - ", arr5.slice(0, 5));
+  // console.log("arr5 - ", arr5);
+  // console.log("Splice - ", arr5.splice(0, 5));
+  // console.log("arr5 - ", arr5); // *** Changes the array
+
+  let arr6 = ["a", "b", "c", "d", "e"];
+  console.log(arr6);
+  console.log(arr6.splice(2, 1, "x", "y"));
+  console.log(arr6);
 }
+
 // q12();
 
 // ! Arrays - Part2
@@ -971,6 +971,7 @@ function adv09() {
 /**
  * ? Promise part 1
  * ? promise1.then() -> direct connection with resolve
+ *
  */
 function adv08() {
   // [c2] CREATING PROMISE
@@ -1106,7 +1107,6 @@ async function adv13() {
     .catch((err) => console.log("Error - ", err))
     .finally(() => console.log("Finally promise is Resolved"));
 }
-
 // adv13();
 
 // [c1]
